@@ -10,6 +10,7 @@ dependencies {
     compile 'com.sparkjava:spark-core:2.2'
     compile "org.codehaus.groovy:groovy-all:2.4.1"
   	testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+  	testCompile "com.google.code.gson:gson:2.2.4"
 }
 
 task runScript (dependsOn: 'classes', type: JavaExec) {
