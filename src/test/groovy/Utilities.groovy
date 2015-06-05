@@ -19,8 +19,6 @@ import java.util.Map;
 
 public class Utilities {
 
-	public static String x () { return "x"}
-
 	public static TestResponse request(String method, String path) throws IOException{
 	
 		URL url = new URL("http://localhost:4567" + path);

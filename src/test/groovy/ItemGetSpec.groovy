@@ -6,17 +6,12 @@ class ItemGetSpec extends spock.lang.Specification {
 
 	// Based on example http://java.dzone.com/articles/building-simple-restful-api
 
-	def setupSpec() {
-		Service.main(null)
-	}
-
-
   def "get an item"() {
     setup:
       IItem item = new Item(name)
       Service service = new Service()
       service.setItem(item)
-
+      service.main(null)
     when:
     	TestResponse res = Utilities.request("GET","/items/"+name)
     	Map<String, String> json = res.json();
