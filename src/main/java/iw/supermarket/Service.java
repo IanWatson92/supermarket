@@ -8,13 +8,29 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+import spark.ModelAndView;
+import spark.template.freemarker.FreeMarkerEngine;
+
+import freemarker.template.Configuration;
+
+import java.io.File;
+import java.io.IOException;
+
 public class Service {
 
 	private Logger _logger;
-	private static Map<String, IItem> items = new HashMap<String, IItem>();;
+	private static Map<String, IItem> items = new HashMap<String, IItem>();
+
+	private Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
 
 	public Service() {
 		_logger = Logger.getLogger(this.getClass().getName());
+
+		try {
+			cfg.setDirectoryForTemplateLoading(new File(System.getProperty("resourcesPath")));
+		} catch (IOException e) {
+			_logger.log(Level.SEVERE,"Exception thrown", e);
+		}
 
 		post("/items", "application/json", (req, res) -> {
 			String name = req.queryParams("name");
@@ -30,6 +46,12 @@ public class Service {
     		String name = req.params(":name");
     		return getItem(name);
     	}, new JsonTransformer());
+
+    	get("/", (req, res) -> {
+    		Map<String,Object> attributes = new HashMap<>();
+    		attributes.put("message","Hello!");
+    		return new ModelAndView(attributes,"home.ftl");
+    	}, new FreeMarkerEngine(cfg));
 	}
 
 	public IItem getItem(String name) {

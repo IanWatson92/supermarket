@@ -10,10 +10,15 @@ dependencies {
     compile 'com.sparkjava:spark-core:2.2'
     compile "org.codehaus.groovy:groovy-all:2.4.1"
     compile "com.google.code.gson:gson:2.2.4"
+    compile "com.sparkjava:spark-template-freemarker:2.0.0"
+	compile "org.freemarker:freemarker:2.3.22"
   	testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
 }
 
+println "resources -> " + sourceSets.main.output.resourcesDir
+
 task runScript (dependsOn: 'classes', type: JavaExec) {
     main = 'iw.supermarket.Service'
-    classpath = sourceSets.main.runtimeClasspath
+    classpath += sourceSets.main.runtimeClasspath
+    jvmArgs = ["-DresourcesPath="+sourceSets.main.output.resourcesDir]
 }
