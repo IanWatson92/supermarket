@@ -2,6 +2,8 @@ import iw.supermarket.Service
 
 class ItemPostSpec extends spock.lang.Specification {
 
+	// Based on example http://java.dzone.com/articles/building-simple-restful-api
+
 	def setupSpec() {
 		Service.main(null)
 	}
@@ -10,9 +12,11 @@ class ItemPostSpec extends spock.lang.Specification {
   def "post an item and check response"() {
     when:
     	TestResponse res = Utilities.request("POST","/items?name="+name)
+    	Map<String, String> json = res.json();
     then:
 			assert res.status == 201
+			assert json.get("name") == name
     where:
-    	name << ["Banana"]
+    	name << ["Banana", "Orange"]
   }
 } 

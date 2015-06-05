@@ -23,14 +23,14 @@ public class Service {
 			items.put(name,item);
 
 			res.status(201);
-			return name;
-		});
+			return item;
+		}, new JsonTransformer());
 
 
     	get("/items/:name", (req, res) -> {
     		IItem item = items.get(req.params(":name"));
-    		return "Name -> " + item.getName();
-    	});
+    		return item;
+    	}, new JsonTransformer());
 
 
     }
