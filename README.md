@@ -1,4 +1,4 @@
-A supermarket pricing example.
+#A supermarket pricing example.
 
 To run execute gradle runScript.
 
