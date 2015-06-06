@@ -38,6 +38,7 @@
       <h1>Deals:</h1>
         <table id="deals-table">
           <thead>
+            <th>Type</th>
             <th>Items</th>
             <th>Quantity needed</th>
           </thead>
@@ -53,6 +54,14 @@
         </div>
         <br>Quantity needed:<br>
         <input type="number" name="quantity" id="weight" min="1" step="1">
+        <br>Deal type:<br>
+        <div>
+          <select id="dealTypes" name="dealTypes">
+          </select>
+        </div>
+        <br>
+        <div id="insertInto">
+        </div>
         <div>
           <input type="submit" name="g" value="Submit" id="g">
         </div>

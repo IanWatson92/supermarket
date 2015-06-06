@@ -5,6 +5,8 @@ import static spark.Spark.*;
 import java.util.Set;
 import java.util.HashSet;
 
+import java.util.ArrayList;
+
 import java.util.Map;
 import java.util.HashMap;
 
@@ -67,6 +69,11 @@ public class Service {
 
 	int nextId = 1;
 	public void setupDeals() {
+
+		get("/deals/types", "application/json", (req, res) -> {
+    		return getDealTypes();
+    	}, new JsonTransformer());
+
 		get("/deals", "application/json", (req, res) -> {
     		return getDeals();
     	}, new JsonTransformer());
@@ -162,6 +169,13 @@ public class Service {
 
 	public Collection getDeals() {
 		return deals.getDeals().values();
+	}
+
+	// hardcode for now...
+	public Collection getDealTypes() {
+		ArrayList list = new ArrayList<String>();
+		list.add("Buy X Get Y Free");
+		return list;
 	}
 
 	public IDeal getDeal(Integer id) {

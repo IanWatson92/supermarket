@@ -11,6 +11,8 @@ public class Deal implements IDeal {
 	private int quantityNeeded;
 	private int dealId;
 
+	private String dealType = "Buy X Get Y Free";
+
 	public Deal(int dealId, Set<IItem> itemsNeeded, int quantityNeeded) {
 		this.dealId = dealId;
 		this.itemsNeeded = itemsNeeded;
@@ -51,6 +53,10 @@ public class Deal implements IDeal {
 
 	public void setDealId(int dealId) {
 		this.dealId = dealId;
+	}
+
+	public String getDealType() {
+		return dealType;
 	}
 
 	@Override

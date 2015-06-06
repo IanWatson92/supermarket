@@ -41,12 +41,37 @@ function renderDeals() {
 	        	items += this.name + " ";
 	        }) 
 	        console.log("items -> " + items);
+	        tbl_row += "<td>"+ this.dealType+"</td>";
 	        tbl_row += "<td>"+ items+"</td>";
 	        tbl_row += "<td>"+ this.quantityNeeded+"</td>";
 	        tbl_body += "<tr>"+tbl_row+"</tr>";
 	        //tbl_body += "<tr>123</tr>";
 	    })
 	    $("#deals-table tbody").html(tbl_body);
+	});
+
+	$.getJSON("/deals/types" , function(data) {
+
+	    var selectItems = "";
+	    $.each(data, function(index, object) {
+	    	console.log("Index -> " + index)
+	    	console.log("Name -> " + object)
+	    	var select = "";
+	    	if (index == 0) {
+	    		select += "<option value=\""+object+"\" selected>"+object+"</option>";
+	   		} else {
+	   			select += "<option value=\""+object+"\">"+object+"</option>";
+	   		}
+	   		selectItems += select; 	
+	    })
+	    $("#dealTypes").html(selectItems);
+
+	    var type = $("#dealTypes option[selected]").attr("value")
+
+	    if (type === "Buy X Get Y Free") {
+	    	console.log("in if!");
+	    	$("#insertInto").append("Items Free:<br><input type=\"number\" name=\"itemsFree\" id=\"itemsFree\" min=\"1\" step=\"1\">");
+	    }
 	});
 }
 
@@ -55,7 +80,6 @@ function renderDeals() {
 $(document).ready(function() {
     renderItems();
     renderDeals();
-
 
     $('#addItem').submit(function () {
 		var path = "/items";
@@ -86,4 +110,5 @@ $(document).ready(function() {
 		
 		return false;
 	});
+
 });

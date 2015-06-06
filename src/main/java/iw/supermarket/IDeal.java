@@ -4,6 +4,8 @@ import java.util.Set;
 
 public interface IDeal {
 
+	public String getDealType();
+
 	public int getDealId();
 	public void setDealId(int dealId);
 
