@@ -48,6 +48,11 @@ public class Service {
 		setupItems();
 		setupDeals();
 
+		exception(Exception.class, (e, request, response) -> {
+   			response.status(400);
+    		response.body("Exception -> " + e.getMessage());
+		});
+
 
     	// replaced with static html for now
     	// get("/", (req, res) -> {
@@ -59,6 +64,8 @@ public class Service {
 
 	}
 
+
+	int nextId = 1;
 	public void setupDeals() {
 		get("/deals", "application/json", (req, res) -> {
     		return getDeals();
@@ -68,6 +75,36 @@ public class Service {
     		Integer id = Integer.valueOf(req.params(":id"));
     		return getDeal(id);
     	}, new JsonTransformer());
+
+    	post("/deals", "application/json", (req, res) -> {
+    		_logger.log(Level.INFO,"items -> " + req.queryMap("items").values().length);
+			
+			String[] itemNames = req.queryMap("items").values();
+
+			Integer quantity = Integer.valueOf(req.queryParams("quantity"));
+
+			Set<IItem> items = new HashSet<IItem>();
+			for (int i = 0; i < itemNames.length; i++) {
+				IItem item = getItem(itemNames[i]);
+				_logger.log(Level.INFO,"item is null, throwing client error");
+				if (item == null) {
+					throw new Exception("Item " + itemNames[i] + " does not exist");
+				}
+				items.add(item);
+			}
+			
+			IDeal deal;
+			nextId++;
+			// need to deal with id better here
+
+			deal = new Deal(nextId, items, quantity);
+			_logger.log(Level.INFO,"Deal -> " + deal.toString());
+
+			setDeal(deal);
+
+			res.status(201);
+			return deal;
+		}, new JsonTransformer());
 	}
 
 	public void setupItems() {
@@ -129,6 +166,10 @@ public class Service {
 
 	public IDeal getDeal(Integer id) {
 		return deals.getDeal(id);
+	}
+
+	public void setDeal(IDeal deal) {
+		deals.setDeal(deal);
 	}
 
 	public static void main(String[] args) {

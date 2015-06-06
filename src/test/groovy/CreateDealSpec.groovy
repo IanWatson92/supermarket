@@ -19,7 +19,7 @@ Can't see a easy way to use data driven approach for multiple items, will hardco
       IItem item = new Item("Grape", 12, 2.25)
       Set<IItem> items = new HashSet<IItem>();
       items.add(item)
-      IDeal deal = new Deal(items,3)
+      IDeal deal = new Deal(1,items,3)
     when:
     	Set<IItem> itemsNeeded = deal.getItemsNeeded();
     then:

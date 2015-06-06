@@ -53,4 +53,9 @@ public class Deal implements IDeal {
 		this.dealId = dealId;
 	}
 
+	@Override
+	public String toString() {
+		return "Deal [id:" + getDealId() +",items:" + getItemsNeeded().toString() + ",quantity:" + getQuantityNeeded() + "]";
+	}
+
 }

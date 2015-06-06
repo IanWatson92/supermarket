@@ -41,4 +41,17 @@ $(document).ready(function() {
 		return false;
 	});
 
+	$( "#addDeal" ).submit(function () {
+		var path = "/deals";
+		$.ajax({
+			type: "POST",
+			url: path,
+			data: $("#addDeal").serializeArray(),
+			success: function(data) {
+				console.log("success -> " + data)
+			}
+		});
+		
+		return false;
+	});
 });
