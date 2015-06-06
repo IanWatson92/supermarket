@@ -17,6 +17,14 @@ function renderItems() {
 	        tbl_body += "<tr>"+tbl_row+"</tr>";
 	    })
 	    $("#my-ajax-table tbody").html(tbl_body);
+
+	    var selectItems = "";
+	    $.each(data, function() {
+	    	var select = "";
+	    	select += "<option value="+this.name+"\">"+this.name+"</option>";
+	   		selectItems += select; 	
+	    })
+	    $("#dealItems").html(selectItems);
 	});
 }
 
