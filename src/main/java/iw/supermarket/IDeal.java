@@ -17,6 +17,8 @@ public interface IDeal {
 	public int getQuantityNeeded();
 	public void setQuantityNeeded(int quantity);
 
+	public String getDealInfo();
+
 	public void applyDeal(IShoppingCart cart);
 
 }

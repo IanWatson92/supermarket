@@ -16,17 +16,18 @@ class CreateDealPostSpec extends spock.lang.Specification {
       service.setItem(item)
       service.setItem(item2)
     when:
-    	TestResponse res = Utilities.request("POST","/deals?"+itemlist+"&quantity="+quantity)
+    	TestResponse res = Utilities.request("POST","/deals?"+itemlist+"&quantity="+quantity+"&itemsFree="+itemsFree+"&dealTypes=Buy%20X%20Get%20Y%20Free")
     	Map<String, String> json = res.json();
     then:
 			assert res.status == 201
 			assert json.get("quantityNeeded") == quantity
       assert json.get("itemsNeeded").size() == 2
+      assert json.get("itemsFree") == itemsFree
     cleanup:
       service.stopServer();
     where:
-    	quantity     | itemlist
-      3            | "items=apple&items=banana"
+    	itemsFree    | quantity     | itemlist
+      1            | 3            | "items=apple&items=banana"
   }
 
 } 

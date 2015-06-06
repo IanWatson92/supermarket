@@ -19,12 +19,13 @@ Can't see a easy way to use data driven approach for multiple items, will hardco
       IItem item = new Item("Grape", 12, 2.25)
       Set<IItem> items = new HashSet<IItem>();
       items.add(item)
-      IDeal deal = new Deal(1,items,3)
+      IDeal deal = new Deal(1,items,3,1)
     when:
     	Set<IItem> itemsNeeded = deal.getItemsNeeded();
     then:
 			assert itemsNeeded.size() == 1
 			assert deal.quantityNeeded == 3
+      assert deal.itemsFree == 1
   }
 
 } 

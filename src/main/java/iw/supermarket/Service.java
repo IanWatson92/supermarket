@@ -2,6 +2,8 @@ package iw.supermarket;
 
 import static spark.Spark.*;
 
+import spark.*;
+
 import java.util.Set;
 import java.util.HashSet;
 
@@ -26,6 +28,7 @@ import com.google.gson.Gson;
 import java.math.BigDecimal;
 
 import java.util.Collection;
+
 
 public class Service {
 
@@ -84,34 +87,53 @@ public class Service {
     	}, new JsonTransformer());
 
     	post("/deals", "application/json", (req, res) -> {
-    		_logger.log(Level.INFO,"items -> " + req.queryMap("items").values().length);
+    		_logger.log(Level.INFO,"Post deal called");
 			
-			String[] itemNames = req.queryMap("items").values();
+			String type = req.queryParams("dealTypes");
 
-			Integer quantity = Integer.valueOf(req.queryParams("quantity"));
-
-			Set<IItem> items = new HashSet<IItem>();
-			for (int i = 0; i < itemNames.length; i++) {
-				IItem item = getItem(itemNames[i]);
-				_logger.log(Level.INFO,"item name " + itemNames[i] + " is null, throwing client error");
-				if (item == null) {
-					throw new Exception("Item " + itemNames[i] + " does not exist");
-				}
-				items.add(item);
-			}
-			
 			IDeal deal;
-			nextId++;
-			// need to deal with id better here
-
-			deal = new Deal(nextId, items, quantity);
-			_logger.log(Level.INFO,"Deal -> " + deal.toString());
-
-			setDeal(deal);
+			if(type.equals("Buy X Get Y Free")) {
+				_logger.log(Level.INFO,"Type is Buy X Get Y Free");
+				deal = buyXGetYFreeDeal(req);
+			} else {
+				_logger.log(Level.SEVERE,"Type: " + type + " not found");
+				throw new Exception("Deal not found!");
+			}
 
 			res.status(201);
 			return deal;
 		}, new JsonTransformer());
+	}
+
+	public IDeal buyXGetYFreeDeal(Request req) throws Exception {
+		_logger.log(Level.SEVERE,"buyXGetYFreeDeal");
+
+		String[] itemNames = req.queryMap("items").values();
+
+		Integer quantity = Integer.valueOf(req.queryParams("quantity"));
+
+		Integer itemsFree = Integer.valueOf(req.queryParams("itemsFree"));
+		_logger.log(Level.INFO,"items free " + itemsFree);
+
+		Set<IItem> items = new HashSet<IItem>();
+		for (int i = 0; i < itemNames.length; i++) {
+			IItem item = getItem(itemNames[i]);
+			_logger.log(Level.INFO,"item name " + itemNames[i] + " is null, throwing client error");
+			if (item == null) {
+				throw new Exception("Item " + itemNames[i] + " does not exist");
+			}
+			items.add(item);
+		}
+		
+		IDeal deal;
+		nextId++;
+		// need to deal with id better here
+
+		deal = new Deal(nextId, items, quantity, itemsFree);
+		_logger.log(Level.INFO,"Deal -> " + deal.toString());
+
+		setDeal(deal);
+		return deal;
 	}
 
 	public void setupItems() {
@@ -197,6 +219,6 @@ public class Service {
 		Set<IItem> items = new HashSet<IItem>();
 		items.add(apple);
 		items.add(banana);
-		service.deals.setDeal(new Deal(1,items,3));
+		service.deals.setDeal(new Deal(1,items,2,1));
     }
 }

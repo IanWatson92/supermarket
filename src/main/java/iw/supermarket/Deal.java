@@ -11,12 +11,17 @@ public class Deal implements IDeal {
 	private int quantityNeeded;
 	private int dealId;
 
+	private int itemsFree;
+	private String dealInfo;
+
 	private String dealType = "Buy X Get Y Free";
 
-	public Deal(int dealId, Set<IItem> itemsNeeded, int quantityNeeded) {
+	public Deal(int dealId, Set<IItem> itemsNeeded, int quantityNeeded, int itemsFree) {
 		this.dealId = dealId;
 		this.itemsNeeded = itemsNeeded;
 		this.quantityNeeded = quantityNeeded;
+		this.itemsFree = itemsFree;
+		dealInfo = itemsFree + " items free";
 	}
 
 	public boolean addItem(IItem item) {
@@ -25,6 +30,10 @@ public class Deal implements IDeal {
 
 	public boolean removeItem(IItem item) {
 		return itemsNeeded.remove(item);
+	}
+
+	public String getDealInfo() {
+		return dealInfo;
 	}
 
 	public Set<IItem> getItemsNeeded() {
@@ -41,6 +50,14 @@ public class Deal implements IDeal {
 
 	public void setQuantityNeeded(int quantity) {
 		this.quantityNeeded = quantity;
+	}
+
+	public int getItemsFree() {
+		return itemsFree;
+	}
+
+	public void setItemsFree(int itemsFree) {
+		this.itemsFree = itemsFree;
 	}
 
 	public void applyDeal(IShoppingCart cart) {

@@ -44,6 +44,7 @@ function renderDeals() {
 	        tbl_row += "<td>"+ this.dealType+"</td>";
 	        tbl_row += "<td>"+ items+"</td>";
 	        tbl_row += "<td>"+ this.quantityNeeded+"</td>";
+	        tbl_row += "<td>"+ this.dealInfo+"</td>";
 	        tbl_body += "<tr>"+tbl_row+"</tr>";
 	        //tbl_body += "<tr>123</tr>";
 	    })
@@ -68,7 +69,7 @@ function renderDeals() {
 
 	    var type = $("#dealTypes option[selected]").attr("value")
 
-	    if (type === "Buy X Get Y Free") {
+	    if (type === "Buy X Get Y Free" && !$("#itemsFree").length) {
 	    	console.log("in if!");
 	    	$("#insertInto").append("Items Free:<br><input type=\"number\" name=\"itemsFree\" id=\"itemsFree\" min=\"1\" step=\"1\">");
 	    }
