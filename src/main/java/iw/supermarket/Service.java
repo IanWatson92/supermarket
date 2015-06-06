@@ -63,6 +63,11 @@ public class Service {
 		get("/deals", "application/json", (req, res) -> {
     		return getDeals();
     	}, new JsonTransformer());
+
+    	get("/deals/:id", "application/json", (req, res) -> {
+    		Integer id = Integer.valueOf(req.params(":id"));
+    		return getDeal(id);
+    	}, new JsonTransformer());
 	}
 
 	public void setupItems() {
@@ -120,6 +125,10 @@ public class Service {
 
 	public Collection getDeals() {
 		return deals.getDeals().values();
+	}
+
+	public IDeal getDeal(Integer id) {
+		return deals.getDeal(id);
 	}
 
 	public static void main(String[] args) {

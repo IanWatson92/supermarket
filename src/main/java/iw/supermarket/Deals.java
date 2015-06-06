@@ -25,8 +25,8 @@ public class Deals {
 		_logger = Logger.getLogger(this.getClass().getName());
 	}
 
-	public IDeal getDeal(String name) {
-		IDeal deal = deals.get(name);
+	public IDeal getDeal(Integer id) {
+		IDeal deal = deals.get(id);
 		return deal;
 	}
 
