@@ -1,8 +1,8 @@
 #A supermarket pricing example.
 
-To run execute gradle runScript.
+To run execute `gradle runScript`.
 
-To test execute gradle test.
+To test execute `gradle test`.
 
 We have 2 main types of Items and Deals.
 
