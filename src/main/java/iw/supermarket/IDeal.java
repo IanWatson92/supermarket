@@ -4,6 +4,9 @@ import java.util.Set;
 
 public interface IDeal {
 
+	public int getDealId();
+	public void setDealId(int dealId);
+
 	public Set<IItem> getItemsNeeded();
 	public void setItemsNeeded(Set<IItem> itemsNeeded);
 	public boolean addItem(IItem item);

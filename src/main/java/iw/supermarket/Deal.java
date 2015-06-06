@@ -9,8 +9,10 @@ public class Deal implements IDeal {
 
 	private Set<IItem> itemsNeeded;
 	private int quantityNeeded;
+	private int dealId;
 
-	public Deal(Set<IItem> itemsNeeded, int quantityNeeded) {
+	public Deal(int dealId, Set<IItem> itemsNeeded, int quantityNeeded) {
+		this.dealId = dealId;
 		this.itemsNeeded = itemsNeeded;
 		this.quantityNeeded = quantityNeeded;
 	}
@@ -41,6 +43,14 @@ public class Deal implements IDeal {
 
 	public void applyDeal(IShoppingCart cart) {
 		return;
+	}
+
+	public int getDealId() {
+		return dealId;
+	}
+
+	public void setDealId(int dealId) {
+		this.dealId = dealId;
 	}
 
 }

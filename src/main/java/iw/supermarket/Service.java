@@ -2,6 +2,9 @@ package iw.supermarket;
 
 import static spark.Spark.*;
 
+import java.util.Set;
+import java.util.HashSet;
+
 import java.util.Map;
 import java.util.HashMap;
 
@@ -26,11 +29,13 @@ public class Service {
 
 	private Logger _logger;
 	private Items items;
+	private Deals deals;
 
 	private Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
 
 	public Service() {
 		items = new Items();
+		deals = new Deals();
 		_logger = Logger.getLogger(this.getClass().getName());
 
 		staticFileLocation("/public");
@@ -39,6 +44,28 @@ public class Service {
 		} catch (IOException e) {
 			_logger.log(Level.SEVERE,"Exception thrown", e);
 		}
+
+		setupItems();
+		setupDeals();
+
+
+    	// replaced with static html for now
+    	// get("/", (req, res) -> {
+    	// 	Map<String,Object> attributes = new HashMap<>();
+    	// 	attributes.put("message","Hello!");
+    	// 	attributes.put("items",items.getItems());
+    	// 	return new ModelAndView(attributes,"home.ftl");
+    	// }, new FreeMarkerEngine(cfg));
+
+	}
+
+	public void setupDeals() {
+		get("/deals", "application/json", (req, res) -> {
+    		return getDeals();
+    	}, new JsonTransformer());
+	}
+
+	public void setupItems() {
 
 		post("/items", "application/json", (req, res) -> {
 			String name = req.queryParams("name");
@@ -73,15 +100,6 @@ public class Service {
     	get("/items", "application/json", (req, res) -> {
     		return getItems();
     	}, new JsonTransformer());
-
-    	// replaced with static html for now
-    	// get("/", (req, res) -> {
-    	// 	Map<String,Object> attributes = new HashMap<>();
-    	// 	attributes.put("message","Hello!");
-    	// 	attributes.put("items",items.getItems());
-    	// 	return new ModelAndView(attributes,"home.ftl");
-    	// }, new FreeMarkerEngine(cfg));
-
 	}
 
 	public void setItem(IItem item) {
@@ -100,9 +118,21 @@ public class Service {
 		spark.Spark.stop();
 	}
 
+	public Collection getDeals() {
+		return deals.getDeals().values();
+	}
+
 	public static void main(String[] args) {
 		Service service = new Service();
-		service.items.setItem(new Item("apple",new BigDecimal(12)));
-		service.items.setItem(new Item("banana",new BigDecimal(10),new BigDecimal(9)));
+		IItem apple = new Item("apple",new BigDecimal(12));
+		IItem banana = new Item("banana",new BigDecimal(10));
+
+		service.items.setItem(apple);
+		service.items.setItem(banana);
+		
+		Set<IItem> items = new HashSet<IItem>();
+		items.add(apple);
+		items.add(banana);
+		service.deals.setDeal(new Deal(1,items,3));
     }
 }
