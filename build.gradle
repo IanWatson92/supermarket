@@ -17,6 +17,10 @@ dependencies {
 
 println "resources -> " + sourceSets.main.output.resourcesDir
 
+test {
+	 systemProperty 'resourcesPath', sourceSets.main.output.resourcesDir
+}
+
 task runScript (dependsOn: 'classes', type: JavaExec) {
     main = 'iw.supermarket.Service'
     classpath += sourceSets.main.runtimeClasspath

@@ -16,6 +16,12 @@ import freemarker.template.Configuration;
 import java.io.File;
 import java.io.IOException;
 
+import com.google.gson.Gson;
+
+import java.math.BigDecimal;
+
+import java.util.Collection;
+
 public class Service {
 
 	private Logger _logger;
@@ -27,6 +33,7 @@ public class Service {
 		items = new Items();
 		_logger = Logger.getLogger(this.getClass().getName());
 
+		staticFileLocation("/public");
 		try {
 			cfg.setDirectoryForTemplateLoading(new File(System.getProperty("resourcesPath")));
 		} catch (IOException e) {
@@ -35,8 +42,11 @@ public class Service {
 
 		post("/items", "application/json", (req, res) -> {
 			String name = req.queryParams("name");
-			IItem item = new Item(name);
-			items.setItem(item);
+			String priceParam = req.queryParams("price");
+			BigDecimal price = new BigDecimal(priceParam);
+
+			IItem item = new Item(name,price);
+			setItem(item);
 
 			res.status(201);
 			return item;
@@ -45,24 +55,38 @@ public class Service {
 
     	get("/items/:name", "application/json", (req, res) -> {
     		String name = req.params(":name");
-    		return items.getItem(name);
+    		return getItem(name);
     	}, new JsonTransformer());
 
     	get("/items", "application/json", (req, res) -> {
-    		return items.getItems();
+    		return getItems();
     	}, new JsonTransformer());
 
-    	get("/", (req, res) -> {
-    		Map<String,Object> attributes = new HashMap<>();
-    		attributes.put("message","Hello!");
-    		attributes.put("items",items.getItems());
-    		return new ModelAndView(attributes,"home.ftl");
-    	}, new FreeMarkerEngine(cfg));
+    	// replaced with static html for now
+    	// get("/", (req, res) -> {
+    	// 	Map<String,Object> attributes = new HashMap<>();
+    	// 	attributes.put("message","Hello!");
+    	// 	attributes.put("items",items.getItems());
+    	// 	return new ModelAndView(attributes,"home.ftl");
+    	// }, new FreeMarkerEngine(cfg));
+
+	}
+
+	public void setItem(IItem item) {
+		items.setItem(item);
+	}
+
+	public IItem getItem(String name) {
+		return items.getItem(name);
+	}
+
+	public Collection getItems() {
+		return items.getItems().values();
 	}
 
 	public static void main(String[] args) {
 		Service service = new Service();
-		service.items.setItem(new Item("apple"));
-		service.items.setItem(new Item("banana"));
+		service.items.setItem(new Item("apple",new BigDecimal(12)));
+		service.items.setItem(new Item("banana",new BigDecimal(10)));
     }
 }

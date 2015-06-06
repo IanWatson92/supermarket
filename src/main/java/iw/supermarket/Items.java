@@ -42,4 +42,5 @@ public class Items {
 		items.put(item.getName(),item);
 		_logger.log(Level.INFO,"Items size now is " + items.size());
 	}
+
 }

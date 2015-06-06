@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Supermarket</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="jquery.dynatable.js"></script>
+        <link rel="stylesheet" type="text/css" href="jquery.dynatable.css">
+        <script src="items.js"></script>
+    </head>
+
+    <body>
+        <div>
+            <p class="items">The items are </p>
+            <table id="my-ajax-table">
+						  <thead>
+						    <th>Name</th>
+						  </thead>
+						  <tbody>
+						  </tbody>
+						</table>
+        </div>
+        <div>
+        	<form id="addItem">
+						Name:<br>
+						<input type="text" name="name" id="name">
+						<br>
+						<input type="submit" value="Submit">
+						</form>
+        </div>
+    </body>
+</html>

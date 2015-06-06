@@ -1,11 +1,15 @@
 package iw.supermarket;
 
+import java.math.BigDecimal;
+
 public class Item implements IItem {
 
 	String name;
+	BigDecimal price;
 
-	public Item(String name) {
+	public Item(String name, BigDecimal price) {
 		this.name = name;
+		this.price = price;
 	}
 
 	public String getName() {
@@ -14,6 +18,14 @@ public class Item implements IItem {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
 
 }
