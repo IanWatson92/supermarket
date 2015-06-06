@@ -49,11 +49,13 @@ public class Service {
 
 			IItem item;
 
-			if (weightParam != null) {
+			if (weightParam != null || weightParam.isEmpty()) {
+				_logger.log(Level.INFO,"WeightParam not set");
+				item = new Item(name,price);
+			} else {
+				_logger.log(Level.INFO,"WeightParam set");
 				BigDecimal weight = new BigDecimal(weightParam);
 				item = new Item(name,price,weight);
-			} else {
-				item = new Item(name,price);
 			}
 
 			setItem(item);
@@ -97,6 +99,6 @@ public class Service {
 	public static void main(String[] args) {
 		Service service = new Service();
 		service.items.setItem(new Item("apple",new BigDecimal(12)));
-		service.items.setItem(new Item("banana",new BigDecimal(10)));
+		service.items.setItem(new Item("banana",new BigDecimal(10),new BigDecimal(9)));
     }
 }
