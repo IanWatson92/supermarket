@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.Set;
 import java.util.HashSet;
 
-public class Deal implements IDeal {
+public class BuyXGetYFreeDeal implements IDeal {
 
 	private Set<IItem> itemsNeeded;
 	private int quantityNeeded;
@@ -16,7 +16,7 @@ public class Deal implements IDeal {
 
 	private String dealType = "Buy X Get Y Free";
 
-	public Deal(int dealId, Set<IItem> itemsNeeded, int quantityNeeded, int itemsFree) {
+	public BuyXGetYFreeDeal(int dealId, Set<IItem> itemsNeeded, int quantityNeeded, int itemsFree) {
 		this.dealId = dealId;
 		this.itemsNeeded = itemsNeeded;
 		this.quantityNeeded = quantityNeeded;

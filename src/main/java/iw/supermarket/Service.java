@@ -129,7 +129,7 @@ public class Service {
 		nextId++;
 		// need to deal with id better here
 
-		deal = new Deal(nextId, items, quantity, itemsFree);
+		deal = new BuyXGetYFreeDeal(nextId, items, quantity, itemsFree);
 		_logger.log(Level.INFO,"Deal -> " + deal.toString());
 
 		setDeal(deal);
@@ -219,6 +219,6 @@ public class Service {
 		Set<IItem> items = new HashSet<IItem>();
 		items.add(apple);
 		items.add(banana);
-		service.deals.setDeal(new Deal(1,items,2,1));
+		service.deals.setDeal(new BuyXGetYFreeDeal(1,items,2,1));
     }
 }
