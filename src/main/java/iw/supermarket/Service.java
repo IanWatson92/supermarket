@@ -70,7 +70,7 @@ public class Service {
 	}
 
 
-	int nextId = 1;
+	int nextId = 100;
 	public void setupDeals() {
 
 		get("/deals/types", "application/json", (req, res) -> {
@@ -95,6 +95,9 @@ public class Service {
 			if(type.equals("Buy X Get Y Free")) {
 				_logger.log(Level.INFO,"Type is Buy X Get Y Free");
 				deal = buyXGetYFreeDeal(req);
+			} else if (type.equals("Buy X For Y")) {
+				_logger.log(Level.INFO,"Type is Buy X For Y");
+				deal = discountItemDeal(req);
 			} else {
 				_logger.log(Level.SEVERE,"Type: " + type + " not found");
 				throw new Exception("Deal not found!");
@@ -106,7 +109,7 @@ public class Service {
 	}
 
 	public IDeal buyXGetYFreeDeal(Request req) throws Exception {
-		_logger.log(Level.SEVERE,"buyXGetYFreeDeal");
+		_logger.log(Level.INFO,"buyXGetYFreeDeal");
 
 		String[] itemNames = req.queryMap("items").values();
 
@@ -130,6 +133,36 @@ public class Service {
 		// need to deal with id better here
 
 		deal = new BuyXGetYFreeDeal(nextId, items, quantity, itemsFree);
+		_logger.log(Level.INFO,"Deal -> " + deal.toString());
+
+		setDeal(deal);
+		return deal;
+	}
+
+	public IDeal discountItemDeal(Request req) throws Exception {
+		_logger.log(Level.SEVERE,"buyXGetFor£Y");
+
+		String[] itemNames = req.queryMap("items").values();
+
+		Integer quantity = Integer.valueOf(req.queryParams("quantity"));
+
+		BigDecimal discountPrice = new BigDecimal(req.queryParams("discountPrice"));
+
+		Set<IItem> items = new HashSet<IItem>();
+		for (int i = 0; i < itemNames.length; i++) {
+			IItem item = getItem(itemNames[i]);
+			_logger.log(Level.INFO,"item name " + itemNames[i] + " is null, throwing client error");
+			if (item == null) {
+				throw new Exception("Item " + itemNames[i] + " does not exist");
+			}
+			items.add(item);
+		}
+		
+		IDeal deal;
+		nextId++;
+		// need to deal with id better here
+
+		deal = new DiscountItemDeal(nextId, items, quantity, discountPrice);
 		_logger.log(Level.INFO,"Deal -> " + deal.toString());
 
 		setDeal(deal);
@@ -197,6 +230,7 @@ public class Service {
 	public Collection getDealTypes() {
 		ArrayList list = new ArrayList<String>();
 		list.add("Buy X Get Y Free");
+		list.add("Buy X For Y");
 		return list;
 	}
 
@@ -220,5 +254,11 @@ public class Service {
 		items.add(apple);
 		items.add(banana);
 		service.deals.setDeal(new BuyXGetYFreeDeal(1,items,2,1));
+
+		IItem pop = new Item("pop",new BigDecimal(12));
+		Set<IItem> itemsDiscount = new HashSet<IItem>();
+		itemsDiscount.add(pop);
+
+		service.deals.setDeal(new DiscountItemDeal(2,itemsDiscount,3,new BigDecimal(1)));
     }
 }

@@ -33,14 +33,14 @@ function renderDeals() {
 
 		var tbl_body = "";
 	    $.each(data, function() {
-	    	console.log("quantity -> " + this.quantityNeeded);
+	   
 	        var tbl_row = "";
 
 	        var items = "";
 	        $.each(this.itemsNeeded, function() {
 	        	items += this.name + " ";
 	        }) 
-	        console.log("items -> " + items);
+	      
 	        tbl_row += "<td>"+ this.dealType+"</td>";
 	        tbl_row += "<td>"+ items+"</td>";
 	        tbl_row += "<td>"+ this.quantityNeeded+"</td>";
@@ -55,8 +55,8 @@ function renderDeals() {
 
 	    var selectItems = "";
 	    $.each(data, function(index, object) {
-	    	console.log("Index -> " + index)
-	    	console.log("Name -> " + object)
+	   
+	   
 	    	var select = "";
 	    	if (index == 0) {
 	    		select += "<option value=\""+object+"\" selected>"+object+"</option>";
@@ -69,14 +69,21 @@ function renderDeals() {
 
 	    var type = $("#dealTypes option[selected]").attr("value")
 
-	    if (type === "Buy X Get Y Free" && !$("#itemsFree").length) {
-	    	console.log("in if!");
-	    	$("#insertInto").append("Items Free:<br><input type=\"number\" name=\"itemsFree\" id=\"itemsFree\" min=\"1\" step=\"1\">");
-	    }
+	    updateDealForm(type);
 	});
 }
 
+function updateDealForm(type) {
+	if (type === "Buy X Get Y Free") {
+	 
+		$("#insertInto").empty();
+	 	$("#insertInto").append("Items Free:<br><input type=\"number\" name=\"itemsFree\" id=\"itemsFree\" min=\"1\" step=\"1\">");
+	} else if (type === "Buy X For Y") {
 
+		$("#insertInto").empty();
+		$("#insertInto").append("Discount price:<br><input type=\"number\" name=\"discountPrice\" id=\"discountPrice\" min=\"0.01\" step=\"0.01\">");
+	}
+}
 
 $(document).ready(function() {
     renderItems();
@@ -105,11 +112,18 @@ $(document).ready(function() {
 			data: $("#addDeal").serializeArray(),
 			success: function(data) {
 				renderDeals();
-				$("#deals-table tbody").reload();
+				//$("#deals-table tbody").reload();
 			}
 		});
 		
 		return false;
+	});
+
+	$('#dealTypes').on('change', function() {
+
+		var type = this.value;
+
+		updateDealForm(type);
 	});
 
 });
