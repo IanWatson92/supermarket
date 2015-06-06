@@ -10,8 +10,8 @@
 
   <body>
     <div>
-      <p class="items">The items are </p>
-        <table id="my-ajax-table">
+      <h1>Items:</h1>
+        <table id="items-table">
 	     	  <thead>
 				    <th>Name</th>
             <th>Price</th>
@@ -22,6 +22,7 @@
 			  </table>
     </div>
     <div>
+      <h1>Add new item:</h1>
      	<form id="addItem">
 				Name:<br>
 				<input type="text" name="name" id="name" required>
@@ -32,24 +33,30 @@
         <br>
 				<input type="submit" value="Submit">
 			</form>
-        </div>
-
-
+    </div>
+    <div>
+      <h1>Deals:</h1>
+        <table id="deals-table">
+          <thead>
+            <th>Items</th>
+            <th>Quantity needed</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+    </div>
+    <div>
+      <h1>Add new deal:</h1>
+      <form id="addDeal">
         <div>
-
-          <form id="addDeal">
-          <div><select id="dealItems" name="items" multiple>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-          </select></div>
-          <br>Quantity needed:<br>
-          <input type="number" name="quantity" id="weight" min="1" step="1">
-          <div>
-            <input type="submit" name="g" value="Submit" id="g">
-          </div>
-        </form>
-
+          <select id="dealItems" name="items" multiple>          </select>
         </div>
-    </body>
+        <br>Quantity needed:<br>
+        <input type="number" name="quantity" id="weight" min="1" step="1">
+        <div>
+          <input type="submit" name="g" value="Submit" id="g">
+        </div>
+      </form>
+    </div>
+  </body>
 </html>

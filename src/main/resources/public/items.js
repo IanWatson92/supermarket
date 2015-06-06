@@ -8,7 +8,7 @@ function renderItems() {
 	        tbl_row += "<td>"+ this.price+"</td>";
 
 	        if(typeof this.weight === 'undefined') {
-	        	tbl_row += "<td></td>";
+	        	tbl_row += "<td>n/a</td>";
 	        } else {
 	        	tbl_row += "<td>"+ this.weight+"</td>";
 	        }
@@ -16,15 +16,37 @@ function renderItems() {
 	        
 	        tbl_body += "<tr>"+tbl_row+"</tr>";
 	    })
-	    $("#my-ajax-table tbody").html(tbl_body);
+	    $("#items-table tbody").html(tbl_body);
 
 	    var selectItems = "";
 	    $.each(data, function() {
 	    	var select = "";
-	    	select += "<option value="+this.name+"\">"+this.name+"</option>";
+	    	select += "<option value="+this.name+">"+this.name+"</option>";
 	   		selectItems += select; 	
 	    })
 	    $("#dealItems").html(selectItems);
+	});
+}
+
+function renderDeals() {
+	$.getJSON("/deals" , function(data) {
+
+		var tbl_body = "";
+	    $.each(data, function() {
+	    	console.log("quantity -> " + this.quantityNeeded);
+	        var tbl_row = "";
+
+	        var items = "";
+	        $.each(this.itemsNeeded, function() {
+	        	items += this.name + " ";
+	        }) 
+	        console.log("items -> " + items);
+	        tbl_row += "<td>"+ items+"</td>";
+	        tbl_row += "<td>"+ this.quantityNeeded+"</td>";
+	        tbl_body += "<tr>"+tbl_row+"</tr>";
+	        //tbl_body += "<tr>123</tr>";
+	    })
+	    $("#deals-table tbody").html(tbl_body);
 	});
 }
 
@@ -32,6 +54,7 @@ function renderItems() {
 
 $(document).ready(function() {
     renderItems();
+    renderDeals();
 
 
     $('#addItem').submit(function () {
@@ -42,7 +65,7 @@ $(document).ready(function() {
 			data: $("#addItem").serialize(),
 			success: function(data) {
 				renderItems();
-				$("#my-ajax-table tbody").reload();		
+				$("#items-table tbody").reload();		
 			}
 		});
 		
@@ -56,7 +79,8 @@ $(document).ready(function() {
 			url: path,
 			data: $("#addDeal").serializeArray(),
 			success: function(data) {
-				console.log("success -> " + data)
+				renderDeals();
+				$("#deals-table tbody").reload();
 			}
 		});
 		

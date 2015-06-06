@@ -86,7 +86,7 @@ public class Service {
 			Set<IItem> items = new HashSet<IItem>();
 			for (int i = 0; i < itemNames.length; i++) {
 				IItem item = getItem(itemNames[i]);
-				_logger.log(Level.INFO,"item is null, throwing client error");
+				_logger.log(Level.INFO,"item name " + itemNames[i] + " is null, throwing client error");
 				if (item == null) {
 					throw new Exception("Item " + itemNames[i] + " does not exist");
 				}

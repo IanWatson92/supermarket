@@ -28,9 +28,11 @@ public class Items {
 	public IItem getItem(String name) {
 		_logger.log(Level.INFO,"GetItem invoked with " + name);
 		_logger.log(Level.INFO,"Items size is " + items.size());
+
+		_logger.log(Level.INFO,"Items Map is " + items.toString());
 		IItem item = items.get(name);
 		_logger.log(Level.INFO,"Item is " + item);
-		return items.get(name);
+		return item;
 	}
 
 	public Map<String,IItem> getItems() {
