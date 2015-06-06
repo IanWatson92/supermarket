@@ -9,4 +9,8 @@ public interface IItem {
 
 	public BigDecimal getPrice();
 	public void setPrice(BigDecimal price);
+
+	public boolean isPricePerWeight();
+	public BigDecimal getWeight();
+	public void setWeight(BigDecimal price);
 }

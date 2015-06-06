@@ -45,7 +45,17 @@ public class Service {
 			String priceParam = req.queryParams("price");
 			BigDecimal price = new BigDecimal(priceParam);
 
-			IItem item = new Item(name,price);
+			String weightParam = req.queryParams("weight");
+
+			IItem item;
+
+			if (weightParam != null) {
+				BigDecimal weight = new BigDecimal(weightParam);
+				item = new Item(name,price,weight);
+			} else {
+				item = new Item(name,price);
+			}
+
 			setItem(item);
 
 			res.status(201);

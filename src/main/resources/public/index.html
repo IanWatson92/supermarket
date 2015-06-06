@@ -21,11 +21,15 @@
         </div>
         <div>
         	<form id="addItem">
-						Name:<br>
-						<input type="text" name="name" id="name">
-						<br>
-						<input type="submit" value="Submit">
-						</form>
+				Name:<br>
+				<input type="text" name="name" id="name" required>
+				<br>
+                <input type="number" name="price" id="price" min="0.01" step="0.01" required>
+                <br>
+                <input type="number" name="weight" id="weight" min="0.01" step="0.01">
+                <br>
+				<input type="submit" value="Submit">
+			</form>
         </div>
     </body>
 </html>
