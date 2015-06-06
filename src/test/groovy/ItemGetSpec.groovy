@@ -10,15 +10,9 @@ class ItemGetSpec extends spock.lang.Specification {
 
 	// Based on example http://java.dzone.com/articles/building-simple-restful-api
 
-  @Shared
-  Service service
-
-  def setupSpec() {
-    service = new Service()
-  }
-
   def "get an item with no weight"() {
     setup:
+      Service service = new Service()
       IItem item = new Item(name, new BigDecimal(price))
       service.setItem(item)
     when:
@@ -28,6 +22,8 @@ class ItemGetSpec extends spock.lang.Specification {
 			assert res.status == 200
 			assert json.get("name") == name
       assert json.get("price") == price
+    cleanup:
+      service.stopServer();
     where:
     	name     | price 
       "Grape"  | 12    
@@ -37,6 +33,7 @@ class ItemGetSpec extends spock.lang.Specification {
 
   def "get an item with weight"() {
     setup:
+      Service service = new Service()
       IItem item = new Item(name, new BigDecimal(price), new BigDecimal(weight))
       service.setItem(item)
     when:
@@ -47,6 +44,8 @@ class ItemGetSpec extends spock.lang.Specification {
       assert json.get("name") == name
       assert json.get("price") == price
       assert json.get("weight") == weight
+    cleanup:
+      service.stopServer();
     where:
       name     | price | weight
       "Grape"  | 12    | 1.25

@@ -49,7 +49,7 @@ public class Service {
 
 			IItem item;
 
-			if (weightParam != null || weightParam.isEmpty()) {
+			if (weightParam == null || weightParam.isEmpty()) {
 				_logger.log(Level.INFO,"WeightParam not set");
 				item = new Item(name,price);
 			} else {
@@ -94,6 +94,10 @@ public class Service {
 
 	public Collection getItems() {
 		return items.getItems().values();
+	}
+
+	public void stopServer() {
+		spark.Spark.stop();
 	}
 
 	public static void main(String[] args) {
