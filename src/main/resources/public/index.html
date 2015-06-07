@@ -3,13 +3,12 @@
   <head>
     <title>Supermarket</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="jquery.dynatable.js"></script>
-    <link rel="stylesheet" type="text/css" href="jquery.dynatable.css">
-    <script src="items.js"></script>
+    <link rel="stylesheet" type="text/css" href="supermarket.css">
+    <script src="supermarket.js"></script>
   </head>
 
   <body>
-    <div>
+    <div class="items">
       <h1>Items:</h1>
         <table id="items-table">
 	     	  <thead>
@@ -21,7 +20,7 @@
 			    </tbody>
 			  </table>
     </div>
-    <div>
+    <div class="itemform">
       <h1>Add new item:</h1>
      	<form id="addItem">
 				Name:<br>
@@ -34,7 +33,7 @@
 				<input type="submit" value="Submit">
 			</form>
     </div>
-    <div>
+    <div class="deals">
       <h1>Deals:</h1>
         <table id="deals-table">
           <thead>
@@ -47,7 +46,7 @@
           </tbody>
         </table>
     </div>
-    <div>
+    <div class="dealform">
       <h1>Add new deal:</h1>
       <form id="addDeal">
         <div>

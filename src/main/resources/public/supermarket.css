@@ -1,0 +1,17 @@
+.items, .itemform, .deals, .dealform {
+  width: 45%;
+  height:300px;
+  display: inline-block;
+}
+
+.itemform, .dealform {
+  float: right;
+}
+
+.items, .deals {
+  clear: right;
+}
+
+h1 {
+  color: red;
+}
