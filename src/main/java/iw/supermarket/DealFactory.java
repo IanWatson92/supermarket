@@ -31,6 +31,12 @@ public class DealFactory {
 		return ++nextId;
 	}
 
+	/**
+	Creats a IDeal object by delegating call to a specific Deal creation method
+
+	@return IDeal object created
+	@throws Exception if an error occured or bad input
+	**/
 	public static IDeal createDeal(Request req, Service service)  throws Exception {
 
 		Integer dealType = Integer.valueOf(req.queryParams("dealType"));
@@ -55,15 +61,7 @@ public class DealFactory {
 		Integer itemsFree = Integer.valueOf(req.queryParams("itemsFree"));
 		_logger.log(Level.INFO,"items free " + itemsFree);
 
-		Set<IItem> items = new HashSet<IItem>();
-		for (int i = 0; i < itemNames.length; i++) {
-			IItem item = service.getItem(itemNames[i]);
-			_logger.log(Level.INFO,"item name " + itemNames[i] + " is null, throwing client error");
-			if (item == null) {
-				throw new Exception("Item " + itemNames[i] + " does not exist");
-			}
-			items.add(item);
-		}
+		Set<IItem> items = getItems(itemNames, service);
 		
 		IDeal deal;
 
@@ -81,7 +79,25 @@ public class DealFactory {
 		Integer quantity = Integer.valueOf(req.queryParams("quantity"));
 
 		BigDecimal discountPrice = new BigDecimal(req.queryParams("discountPrice"));
+		
+		Set<IItem> items = getItems(itemNames, service);
 
+		IDeal deal;
+
+		deal = new DiscountItemDeal(getNextId(), items, quantity, discountPrice);
+		_logger.log(Level.INFO,"Deal -> " + deal.toString());
+
+		return deal;
+	}
+
+	/**
+	Gets the list of items for a deal. Validates whether items exist.
+
+	@return true if valid
+	@throws Exception when items don't exist invalid
+
+	**/
+	public Set<IItem> getItems(String[] itemNames, Service service) throws Exception{
 		Set<IItem> items = new HashSet<IItem>();
 		for (int i = 0; i < itemNames.length; i++) {
 			IItem item = service.getItem(itemNames[i]);
@@ -91,13 +107,7 @@ public class DealFactory {
 			}
 			items.add(item);
 		}
-		
-		IDeal deal;
-
-		deal = new DiscountItemDeal(getNextId(), items, quantity, discountPrice);
-		_logger.log(Level.INFO,"Deal -> " + deal.toString());
-
-		return deal;
+		return items;
 	}
 
 }
