@@ -23,7 +23,7 @@ Using weight will indicate that the Price is for a particular weight.
 
 
 ##Backend
-The class Service.java is the entry point to the system.
+Entry point is Service.java which initialises a Spark server. 
 
-We have 2 main types of Items and Deals.
+There are 2 main services of /items and /deals exposing GET and POST operations.
 
