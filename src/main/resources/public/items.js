@@ -54,31 +54,32 @@ function renderDeals() {
 	$.getJSON("/deals/types" , function(data) {
 
 	    var selectItems = "";
+	
 	    $.each(data, function(index, object) {
-	   
-	   
+	
 	    	var select = "";
 	    	if (index == 0) {
-	    		select += "<option value=\""+object+"\" selected>"+object+"</option>";
+	    		select += "<option value=\""+object.id+"\" selected>"+object.name+"</option>";
 	   		} else {
-	   			select += "<option value=\""+object+"\">"+object+"</option>";
+	   			select += "<option value=\""+object.id+"\">"+object.name+"</option>";
 	   		}
 	   		selectItems += select; 	
 	    })
 	    $("#dealTypes").html(selectItems);
 
 	    var type = $("#dealTypes option[selected]").attr("value")
-
+	   
 	    updateDealForm(type);
 	});
 }
 
 function updateDealForm(type) {
-	if (type === "Buy X Get Y Free") {
-	 
+
+	if (type == 1) {
+	 	
 		$("#insertInto").empty();
 	 	$("#insertInto").append("Items Free:<br><input type=\"number\" name=\"itemsFree\" id=\"itemsFree\" min=\"1\" step=\"1\">");
-	} else if (type === "Buy X For Y") {
+	} else if (type == 2) {
 
 		$("#insertInto").empty();
 		$("#insertInto").append("Discount price:<br><input type=\"number\" name=\"discountPrice\" id=\"discountPrice\" min=\"0.01\" step=\"0.01\">");

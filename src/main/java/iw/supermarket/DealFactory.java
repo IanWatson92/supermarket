@@ -51,6 +51,10 @@ public class DealFactory {
 		}
 	}
 
+	/**
+	Creates a BuyXGetYFreeDeal deal
+	
+	**/
 	public IDeal buyXGetYFreeDeal(Request req, Service service) throws Exception {
 		_logger.log(Level.INFO,"buyXGetYFreeDeal");
 
@@ -71,6 +75,10 @@ public class DealFactory {
 		return deal;
 	}
 
+	/**
+	Creates a DiscountDeal
+	
+	**/
 	public IDeal discountItemDeal(Request req, Service service) throws Exception {
 		_logger.log(Level.SEVERE,"buyXGetFor£Y");
 

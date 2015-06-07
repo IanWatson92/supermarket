@@ -7,6 +7,7 @@ import spark.*;
 import java.util.Set;
 import java.util.HashSet;
 
+import java.util.List;
 import java.util.ArrayList;
 
 import java.util.Map;
@@ -156,9 +157,20 @@ public class Service {
 
 	// hardcode for now...
 	public Collection getDealTypes() {
-		ArrayList list = new ArrayList<String>();
-		list.add("Buy X Get Y Free");
-		list.add("Buy X For Y");
+		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+
+		HashMap hmap = new HashMap<String,String>();
+		hmap.put("id",DealFactory.BUYXGETYFREE);
+		hmap.put("name","Buy X Get Y Free");
+
+		list.add(hmap);
+
+		HashMap hmap2 = new HashMap<String,String>();
+		hmap2.put("id",DealFactory.BUYXFORY);
+		hmap2.put("name","Buy X For Y");
+
+		list.add(hmap2);
+
 		return list;
 	}
 
