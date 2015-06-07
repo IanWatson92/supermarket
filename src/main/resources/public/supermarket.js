@@ -76,20 +76,19 @@ function renderDeals() {
 function updateDealForm(type) {
 
 	if (type == 1) {
-	 	
+	 	console.log("HERE!");
 		$("#insertInto").empty();
-	 	$("#insertInto").append("Items Free:<br><input type=\"number\" name=\"itemsFree\" id=\"itemsFree\" min=\"1\" step=\"1\">");
+	 	$("#insertInto").append("Items Free:<br><input type=\"number\" name=\"itemsFree\" id=\"itemsFree\" min=\"1\" step=\"1\" required/>");
 	} else if (type == 2) {
 
 		$("#insertInto").empty();
-		$("#insertInto").append("Discount price:<br><input type=\"number\" name=\"discountPrice\" id=\"discountPrice\" min=\"0.01\" step=\"0.01\">");
+		$("#insertInto").append("Discount price:<br><input type=\"number\" name=\"discountPrice\" id=\"discountPrice\" min=\"0.01\" step=\"0.01\" required/>");
 	}
 }
 
 $(document).ready(function() {
     renderItems();
     renderDeals();
-
     $('#addItem').submit(function () {
 		var path = "/items";
 		$.ajax({
