@@ -4,7 +4,7 @@ import spock.lang.*
 
 import iw.supermarket.*;
 
-class CreateDealPostSpec extends spock.lang.Specification {
+class CreateBuyXGetYFreeDealPostSpec extends spock.lang.Specification {
 
 	// Based on example http://java.dzone.com/articles/building-simple-restful-api
   
@@ -16,7 +16,7 @@ class CreateDealPostSpec extends spock.lang.Specification {
       service.setItem(item)
       service.setItem(item2)
     when:
-    	TestResponse res = Utilities.request("POST","/deals?"+itemlist+"&quantity="+quantity+"&itemsFree="+itemsFree+"&dealTypes=Buy%20X%20Get%20Y%20Free")
+    	TestResponse res = Utilities.request("POST","/deals?"+itemlist+"&quantity="+quantity+"&itemsFree="+itemsFree+"&dealType=1")
     	Map<String, String> json = res.json();
     then:
 			assert res.status == 201

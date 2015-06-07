@@ -16,7 +16,7 @@ class CreateDiscountDealPostSpec extends spock.lang.Specification {
       service.setItem(item)
       service.setItem(item2)
     when:
-    	TestResponse res = Utilities.request("POST","/deals?"+itemlist+"&quantity="+quantity+"&discountPrice="+discountPrice+"&dealTypes=Buy%20X%20For%20Y")
+    	TestResponse res = Utilities.request("POST","/deals?"+itemlist+"&quantity="+quantity+"&discountPrice="+discountPrice+"&dealType=2")
     	Map<String, String> json = res.json();
     then:
 			assert res.status == 201
