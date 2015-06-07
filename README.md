@@ -7,19 +7,19 @@ To test execute `gradle test`.
 ##Front end:
 
 ### Item form
-*Name - mandatory
-*Price - mandatory
-*Weight - optional 
+* Name - mandatory
+* Price - mandatory
+* Weight - optional 
 
 Using weight will indicate that the Price is for a particular weight.
 
 ### Deal form
-*Items - mandatory
-*Quantity needed - mandatory
-*Deal type - mandatory
+* Items - mandatory
+* Quantity needed - mandatory
+* Deal type - mandatory
 
-*Items free - if deal is Buy X Get Y free
-*Discount price - if deal is Buy X For Y
+* Items free - if deal is Buy X Get Y free
+* Discount price - if deal is Buy X For Y
 
 
 ##Backend
